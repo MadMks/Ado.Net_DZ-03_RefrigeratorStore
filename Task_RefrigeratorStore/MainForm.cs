@@ -40,7 +40,19 @@ namespace Task_RefrigeratorStore
                     .ConnectionString;
 
                 // Query
-                this.selectQuery = 
+                this.selectQuery = "SELECT * FROM sellers;"
+                    + "SELECT * FROM customers;"
+                    + "SELECT * FROM goods";
+                // DataAdapter
+                this.dataAdapter = new SqlDataAdapter(this.selectQuery, this.connection);
+                // CommandBuilder
+                this.commandBuilder = new SqlCommandBuilder(this.dataAdapter);
+                // DataSet
+                this.dataSet = new DataSet();
+
+                this.dataAdapter.Fill(this.dataSet);
+
+                this.dataGridViewReceipts.DataSource = dataSet.Tables["table"];
             }
             catch (Exception ex)
             {

@@ -79,7 +79,7 @@
             this.dataGridViewReceipts.Location = new System.Drawing.Point(272, 32);
             this.dataGridViewReceipts.Name = "dataGridViewReceipts";
             this.dataGridViewReceipts.RowTemplate.Height = 23;
-            this.dataGridViewReceipts.Size = new System.Drawing.Size(362, 246);
+            this.dataGridViewReceipts.Size = new System.Drawing.Size(516, 246);
             this.dataGridViewReceipts.TabIndex = 4;
             // 
             // labelSeller
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 303);
             this.Controls.Add(this.labelReceipts);
             this.Controls.Add(this.labelGoods);
             this.Controls.Add(this.labelCustomer);
