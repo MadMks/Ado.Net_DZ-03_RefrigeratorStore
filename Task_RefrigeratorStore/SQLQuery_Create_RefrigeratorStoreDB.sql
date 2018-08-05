@@ -1,0 +1,45 @@
+﻿USE model;
+GO
+
+CREATE DATABASE Refrigerator_store;
+GO
+
+USE Refrigerator_store;
+GO
+
+CREATE TABLE goods
+(
+	"Goods_ID" INT NOT NULL PRIMARY KEY IDENTITY,
+	"Name" NVARCHAR(20) NOT NULL,
+	"Quantity" SMALLINT NOT NULL
+);
+GO
+
+CREATE TABLE sellers
+(
+	"Seller_ID" TINYINT NOT NULL PRIMARY KEY IDENTITY,
+	"LastName" NVARCHAR(20) NOT NULL,
+	"FirstName" NVARCHAR(15) NOT NULL,
+	"Patronymic" NVARCHAR(20) NOT NULL
+);
+GO
+
+CREATE TABLE customers
+(
+	"Customer_ID" INT NOT NULL PRIMARY KEY IDENTITY,
+	"LastName" NVARCHAR(20) NOT NULL,
+	"FirstName" NVARCHAR(15) NOT NULL,
+	"Patronymic" NVARCHAR(20) NOT NULL,
+	"PurchasedGoods" INT NOT NULL DEFAULT 0
+);
+GO
+
+CREATE TABLE sales_receipts
+(
+	"Receipt_ID" INT NOT NULL PRIMARY KEY IDENTITY,
+	"DateOfsale" DATE NOT NULL DEFAULT GETDATE(),
+	"FullNameCustomer" NVARCHAR(55) NOT NULL,
+	"FullNameSeller" NVARCHAR(55) NOT NULL,
+	"ProductName" NVARCHAR(20) NOT NULL
+);
+GO
