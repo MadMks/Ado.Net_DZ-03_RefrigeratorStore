@@ -134,6 +134,7 @@
             this.Controls.Add(this.comboBoxSellers);
             this.Name = "MainForm";
             this.Text = "Магазин холодильников";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReceipts)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
