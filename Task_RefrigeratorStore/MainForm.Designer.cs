@@ -72,6 +72,7 @@
             this.buttonCreateReceipt.TabIndex = 3;
             this.buttonCreateReceipt.Text = "Оформить продажу";
             this.buttonCreateReceipt.UseVisualStyleBackColor = true;
+            this.buttonCreateReceipt.Click += new System.EventHandler(this.buttonCreateReceipt_Click);
             // 
             // dataGridViewReceipts
             // 

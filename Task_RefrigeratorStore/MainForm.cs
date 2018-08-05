@@ -105,5 +105,69 @@ namespace Task_RefrigeratorStore
             tableMapping_Sales.ColumnMappings.Add("FullNameSeller", "ФИО продавца");
             tableMapping_Sales.ColumnMappings.Add("ProductName", "Купленные позиции");
         }
+
+        private void buttonCreateReceipt_Click(object sender, EventArgs e)
+        {
+            SqlCommand command = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                //this.connection.Open();
+                //transaction = this.connection.BeginTransaction();
+                //command = this.connection.CreateCommand();
+                //command.Transaction = transaction;
+
+                //command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
+                //command.ExecuteNonQuery();
+                transaction = this.connection.BeginTransaction();
+
+                // TODO 2
+
+                // TODO 3
+
+                transaction.Commit();
+
+                this.UpdatingTheDataInTheProgram();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                transaction.Rollback();
+            }
+            finally
+            {
+                this.connection?.Close();
+            }
+        }
+
+        /// <summary>
+        /// Обновляем данные в программе.
+        /// </summary>
+        private void UpdatingTheDataInTheProgram()
+        {
+            (this.comboBoxSellers.DataSource as DataTable).Clear();
+            (this.comboBoxCustomers.DataSource as DataTable).Clear();
+            (this.listBoxGoods.DataSource as DataTable).Clear();
+            (this.dataGridViewReceipts.DataSource as DataTable).Clear();
+            this.dataAdapter.Fill(this.dataSet);
+        }
+
+        /// <summary>
+        /// Получить строку запроса вставки данных
+        /// в таблицу хранения чеков.
+        /// </summary>
+        /// <returns>Строка запроса вставки данных в таблицу.</returns>
+        private string GetStringOfDataInsertionInTheCheckStorageTable()
+        {
+            string insertQuery = @"INSERT INTO sales_receipts
+                ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])
+                VALUES
+                ('" + DateTime.Today + "', 'cust', 'sell', 'prod');";
+
+            return insertQuery;
+        }
     }
 }
