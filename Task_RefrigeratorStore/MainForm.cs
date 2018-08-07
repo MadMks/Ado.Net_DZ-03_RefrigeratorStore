@@ -21,6 +21,9 @@ namespace Task_RefrigeratorStore
         private SqlCommandBuilder commandBuilder = null;
         private string selectQuery = "";
 
+        private object selectedCustomer;
+        private object selectedSeller;
+
         public MainForm()
         {
             InitializeComponent();
@@ -37,13 +40,16 @@ namespace Task_RefrigeratorStore
             try
             {
                 // Sellers
-                this.comboBoxSellers.DataSource = dataSet.Tables["sellers"];
                 this.comboBoxSellers.DisplayMember = "LastName";
-                //this.comboBoxSellers.ValueMember = "Seller_ID";
+                this.comboBoxSellers.ValueMember = "Seller_ID";
+                this.comboBoxSellers.DataSource = dataSet.Tables["sellers"];
+                
 
                 // Customers
-                this.comboBoxCustomers.DataSource = dataSet.Tables["customers"];
                 this.comboBoxCustomers.DisplayMember = "LastName";
+                this.comboBoxCustomers.ValueMember = "Customer_ID";
+                this.comboBoxCustomers.DataSource = dataSet.Tables["customers"];
+                
 
                 // Goods
                 this.listBoxGoods.DataSource = dataSet.Tables["goods"];
@@ -113,14 +119,13 @@ namespace Task_RefrigeratorStore
 
             try
             {
-                //this.connection.Open();
-                //transaction = this.connection.BeginTransaction();
-                //command = this.connection.CreateCommand();
-                //command.Transaction = transaction;
-
-                //command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
-                //command.ExecuteNonQuery();
+                this.connection.Open();
                 transaction = this.connection.BeginTransaction();
+                command = this.connection.CreateCommand();
+                command.Transaction = transaction;
+
+                command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
+                command.ExecuteNonQuery();
 
                 // TODO 2
 
@@ -148,11 +153,34 @@ namespace Task_RefrigeratorStore
         /// </summary>
         private void UpdatingTheDataInTheProgram()
         {
+            this.RememberTheSelectedPurchaseSettings();
+
             (this.comboBoxSellers.DataSource as DataTable).Clear();
             (this.comboBoxCustomers.DataSource as DataTable).Clear();
             (this.listBoxGoods.DataSource as DataTable).Clear();
             (this.dataGridViewReceipts.DataSource as DataTable).Clear();
             this.dataAdapter.Fill(this.dataSet);
+
+            this.RestoreSelectedPurchaseSettings();
+        }
+
+        /// <summary>
+        /// Восстановить выбранные настройки покупки.
+        /// </summary>
+        private void RestoreSelectedPurchaseSettings()
+        {
+            this.comboBoxSellers.SelectedValue = this.selectedSeller;
+            this.comboBoxCustomers.SelectedValue = this.selectedCustomer;
+            //this.listBoxGoods.sele
+        }
+
+        /// <summary>
+        /// Запоминаем выбранные настройки покупки (оформления чека).
+        /// </summary>
+        private void RememberTheSelectedPurchaseSettings()
+        {
+            this.selectedSeller = this.comboBoxSellers.SelectedValue;
+            this.selectedCustomer = this.comboBoxCustomers.SelectedValue;
         }
 
         /// <summary>
@@ -168,6 +196,16 @@ namespace Task_RefrigeratorStore
                 ('" + DateTime.Today + "', 'cust', 'sell', 'prod');";
 
             return insertQuery;
+        }
+
+        private void comboBoxCustomers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string filterString
+                = "Customer_ID = '"
+                + this.comboBoxCustomers.SelectedValue
+                + "'";
+
+            this.textBoxPurchasedGoods.Text = this.dataSet.Tables["customers"].Select(filterString)[0][4].ToString();
         }
     }
 }
