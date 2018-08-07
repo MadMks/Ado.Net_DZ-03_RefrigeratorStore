@@ -87,7 +87,7 @@ namespace Task_RefrigeratorStore
                 this.commandBuilder = new SqlCommandBuilder(this.dataAdapter);
                 // DataSet
                 this.dataSet = new DataSet();
-
+                // Fill
                 this.dataAdapter.Fill(this.dataSet);
             }
             catch (Exception ex)
@@ -210,6 +210,16 @@ namespace Task_RefrigeratorStore
                 + "'";
 
             this.textBoxPurchasedGoods.Text = this.dataSet.Tables["customers"].Select(filterString)[0][4].ToString();
+        }
+
+        private void listBoxGoods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string filterString
+                = "Goods_ID = '"
+                + this.listBoxGoods.SelectedValue
+                + "'";
+
+            this.textBoxQuantityGoods.Text = this.dataSet.Tables["goods"].Select(filterString)[0][2].ToString();
         }
     }
 }

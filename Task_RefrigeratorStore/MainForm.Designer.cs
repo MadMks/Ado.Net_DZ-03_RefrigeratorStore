@@ -40,6 +40,8 @@
             this.labelPurchasedGoods = new System.Windows.Forms.Label();
             this.groupBoxCustomer = new System.Windows.Forms.GroupBox();
             this.textBoxPurchasedGoods = new System.Windows.Forms.TextBox();
+            this.labelQuantityGoods = new System.Windows.Forms.Label();
+            this.textBoxQuantityGoods = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReceipts)).BeginInit();
             this.groupBoxCustomer.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +72,7 @@
             this.listBoxGoods.Name = "listBoxGoods";
             this.listBoxGoods.Size = new System.Drawing.Size(229, 95);
             this.listBoxGoods.TabIndex = 2;
+            this.listBoxGoods.SelectedIndexChanged += new System.EventHandler(this.listBoxGoods_SelectedIndexChanged);
             // 
             // buttonCreateReceipt
             // 
@@ -130,7 +133,7 @@
             // labelPurchasedGoods
             // 
             this.labelPurchasedGoods.AutoSize = true;
-            this.labelPurchasedGoods.Location = new System.Drawing.Point(16, 67);
+            this.labelPurchasedGoods.Location = new System.Drawing.Point(16, 68);
             this.labelPurchasedGoods.Name = "labelPurchasedGoods";
             this.labelPurchasedGoods.Size = new System.Drawing.Size(99, 13);
             this.labelPurchasedGoods.TabIndex = 9;
@@ -156,11 +159,30 @@
             this.textBoxPurchasedGoods.Size = new System.Drawing.Size(126, 21);
             this.textBoxPurchasedGoods.TabIndex = 10;
             // 
+            // labelQuantityGoods
+            // 
+            this.labelQuantityGoods.AutoSize = true;
+            this.labelQuantityGoods.Location = new System.Drawing.Point(283, 226);
+            this.labelQuantityGoods.Name = "labelQuantityGoods";
+            this.labelQuantityGoods.Size = new System.Drawing.Size(46, 13);
+            this.labelQuantityGoods.TabIndex = 11;
+            this.labelQuantityGoods.Text = "Кол-во:";
+            // 
+            // textBoxQuantityGoods
+            // 
+            this.textBoxQuantityGoods.Location = new System.Drawing.Point(335, 222);
+            this.textBoxQuantityGoods.Name = "textBoxQuantityGoods";
+            this.textBoxQuantityGoods.ReadOnly = true;
+            this.textBoxQuantityGoods.Size = new System.Drawing.Size(126, 21);
+            this.textBoxQuantityGoods.TabIndex = 11;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 587);
+            this.Controls.Add(this.textBoxQuantityGoods);
+            this.Controls.Add(this.labelQuantityGoods);
             this.Controls.Add(this.groupBoxCustomer);
             this.Controls.Add(this.labelReceipts);
             this.Controls.Add(this.labelGoods);
@@ -195,6 +217,8 @@
         private System.Windows.Forms.Label labelPurchasedGoods;
         private System.Windows.Forms.GroupBox groupBoxCustomer;
         private System.Windows.Forms.TextBox textBoxPurchasedGoods;
+        private System.Windows.Forms.Label labelQuantityGoods;
+        private System.Windows.Forms.TextBox textBoxQuantityGoods;
     }
 }
 
