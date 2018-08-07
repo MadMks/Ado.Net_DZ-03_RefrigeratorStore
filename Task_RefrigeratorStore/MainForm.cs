@@ -21,8 +21,9 @@ namespace Task_RefrigeratorStore
         private SqlCommandBuilder commandBuilder = null;
         private string selectQuery = "";
 
-        private object selectedCustomer;
         private object selectedSeller;
+        private object selectedCustomer;
+        private object selectedGoods;
 
         public MainForm()
         {
@@ -49,11 +50,13 @@ namespace Task_RefrigeratorStore
                 this.comboBoxCustomers.DisplayMember = "LastName";
                 this.comboBoxCustomers.ValueMember = "Customer_ID";
                 this.comboBoxCustomers.DataSource = dataSet.Tables["customers"];
-                
+
 
                 // Goods
-                this.listBoxGoods.DataSource = dataSet.Tables["goods"];
                 this.listBoxGoods.DisplayMember = "Name";
+                this.listBoxGoods.ValueMember = "Goods_ID";
+                this.listBoxGoods.DataSource = dataSet.Tables["goods"];
+                
 
                 this.dataGridViewReceipts.DataSource = dataSet.Tables["sales_receipts"];
             }
@@ -171,7 +174,7 @@ namespace Task_RefrigeratorStore
         {
             this.comboBoxSellers.SelectedValue = this.selectedSeller;
             this.comboBoxCustomers.SelectedValue = this.selectedCustomer;
-            //this.listBoxGoods.sele
+            this.listBoxGoods.SelectedValue = this.selectedGoods;
         }
 
         /// <summary>
@@ -181,6 +184,7 @@ namespace Task_RefrigeratorStore
         {
             this.selectedSeller = this.comboBoxSellers.SelectedValue;
             this.selectedCustomer = this.comboBoxCustomers.SelectedValue;
+            this.selectedGoods = this.listBoxGoods.SelectedValue;
         }
 
         /// <summary>
