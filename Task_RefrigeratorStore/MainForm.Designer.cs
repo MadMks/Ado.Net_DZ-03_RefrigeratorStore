@@ -33,24 +33,26 @@
             this.listBoxGoods = new System.Windows.Forms.ListBox();
             this.buttonCreateReceipt = new System.Windows.Forms.Button();
             this.dataGridViewReceipts = new System.Windows.Forms.DataGridView();
-            this.labelSeller = new System.Windows.Forms.Label();
-            this.labelCustomer = new System.Windows.Forms.Label();
-            this.labelGoods = new System.Windows.Forms.Label();
-            this.labelReceipts = new System.Windows.Forms.Label();
             this.labelPurchasedGoods = new System.Windows.Forms.Label();
             this.groupBoxCustomer = new System.Windows.Forms.GroupBox();
             this.textBoxPurchasedGoods = new System.Windows.Forms.TextBox();
             this.labelQuantityGoods = new System.Windows.Forms.Label();
             this.textBoxQuantityGoods = new System.Windows.Forms.TextBox();
+            this.groupBoxGoods = new System.Windows.Forms.GroupBox();
+            this.groupBoxSeller = new System.Windows.Forms.GroupBox();
+            this.groupBoxReceipts = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReceipts)).BeginInit();
             this.groupBoxCustomer.SuspendLayout();
+            this.groupBoxGoods.SuspendLayout();
+            this.groupBoxSeller.SuspendLayout();
+            this.groupBoxReceipts.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxSellers
             // 
             this.comboBoxSellers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSellers.FormattingEnabled = true;
-            this.comboBoxSellers.Location = new System.Drawing.Point(12, 32);
+            this.comboBoxSellers.Location = new System.Drawing.Point(18, 26);
             this.comboBoxSellers.Name = "comboBoxSellers";
             this.comboBoxSellers.Size = new System.Drawing.Size(230, 21);
             this.comboBoxSellers.TabIndex = 0;
@@ -68,7 +70,7 @@
             // listBoxGoods
             // 
             this.listBoxGoods.FormattingEnabled = true;
-            this.listBoxGoods.Location = new System.Drawing.Point(13, 129);
+            this.listBoxGoods.Location = new System.Drawing.Point(19, 24);
             this.listBoxGoods.Name = "listBoxGoods";
             this.listBoxGoods.Size = new System.Drawing.Size(229, 95);
             this.listBoxGoods.TabIndex = 2;
@@ -76,9 +78,9 @@
             // 
             // buttonCreateReceipt
             // 
-            this.buttonCreateReceipt.Location = new System.Drawing.Point(12, 255);
+            this.buttonCreateReceipt.Location = new System.Drawing.Point(144, 209);
             this.buttonCreateReceipt.Name = "buttonCreateReceipt";
-            this.buttonCreateReceipt.Size = new System.Drawing.Size(230, 23);
+            this.buttonCreateReceipt.Size = new System.Drawing.Size(287, 58);
             this.buttonCreateReceipt.TabIndex = 3;
             this.buttonCreateReceipt.Text = "Оформить продажу";
             this.buttonCreateReceipt.UseVisualStyleBackColor = true;
@@ -87,48 +89,12 @@
             // dataGridViewReceipts
             // 
             this.dataGridViewReceipts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewReceipts.Location = new System.Drawing.Point(13, 329);
+            this.dataGridViewReceipts.Location = new System.Drawing.Point(18, 28);
             this.dataGridViewReceipts.Name = "dataGridViewReceipts";
             this.dataGridViewReceipts.ReadOnly = true;
             this.dataGridViewReceipts.RowTemplate.Height = 23;
-            this.dataGridViewReceipts.Size = new System.Drawing.Size(559, 246);
+            this.dataGridViewReceipts.Size = new System.Drawing.Size(512, 239);
             this.dataGridViewReceipts.TabIndex = 4;
-            // 
-            // labelSeller
-            // 
-            this.labelSeller.AutoSize = true;
-            this.labelSeller.Location = new System.Drawing.Point(13, 13);
-            this.labelSeller.Name = "labelSeller";
-            this.labelSeller.Size = new System.Drawing.Size(57, 13);
-            this.labelSeller.TabIndex = 5;
-            this.labelSeller.Text = "Продавец";
-            // 
-            // labelCustomer
-            // 
-            this.labelCustomer.AutoSize = true;
-            this.labelCustomer.Location = new System.Drawing.Point(14, 60);
-            this.labelCustomer.Name = "labelCustomer";
-            this.labelCustomer.Size = new System.Drawing.Size(68, 13);
-            this.labelCustomer.TabIndex = 6;
-            this.labelCustomer.Text = "Покупатель";
-            // 
-            // labelGoods
-            // 
-            this.labelGoods.AutoSize = true;
-            this.labelGoods.Location = new System.Drawing.Point(14, 111);
-            this.labelGoods.Name = "labelGoods";
-            this.labelGoods.Size = new System.Drawing.Size(45, 13);
-            this.labelGoods.TabIndex = 7;
-            this.labelGoods.Text = "Товары";
-            // 
-            // labelReceipts
-            // 
-            this.labelReceipts.AutoSize = true;
-            this.labelReceipts.Location = new System.Drawing.Point(15, 310);
-            this.labelReceipts.Name = "labelReceipts";
-            this.labelReceipts.Size = new System.Drawing.Size(62, 13);
-            this.labelReceipts.TabIndex = 8;
-            this.labelReceipts.Text = "Квитанции";
             // 
             // labelPurchasedGoods
             // 
@@ -144,7 +110,7 @@
             this.groupBoxCustomer.Controls.Add(this.textBoxPurchasedGoods);
             this.groupBoxCustomer.Controls.Add(this.labelPurchasedGoods);
             this.groupBoxCustomer.Controls.Add(this.comboBoxCustomers);
-            this.groupBoxCustomer.Location = new System.Drawing.Point(412, 80);
+            this.groupBoxCustomer.Location = new System.Drawing.Point(14, 84);
             this.groupBoxCustomer.Name = "groupBoxCustomer";
             this.groupBoxCustomer.Size = new System.Drawing.Size(267, 100);
             this.groupBoxCustomer.TabIndex = 10;
@@ -162,7 +128,7 @@
             // labelQuantityGoods
             // 
             this.labelQuantityGoods.AutoSize = true;
-            this.labelQuantityGoods.Location = new System.Drawing.Point(283, 226);
+            this.labelQuantityGoods.Location = new System.Drawing.Point(19, 139);
             this.labelQuantityGoods.Name = "labelQuantityGoods";
             this.labelQuantityGoods.Size = new System.Drawing.Size(46, 13);
             this.labelQuantityGoods.TabIndex = 11;
@@ -170,36 +136,65 @@
             // 
             // textBoxQuantityGoods
             // 
-            this.textBoxQuantityGoods.Location = new System.Drawing.Point(335, 222);
+            this.textBoxQuantityGoods.Location = new System.Drawing.Point(71, 135);
             this.textBoxQuantityGoods.Name = "textBoxQuantityGoods";
             this.textBoxQuantityGoods.ReadOnly = true;
-            this.textBoxQuantityGoods.Size = new System.Drawing.Size(126, 21);
+            this.textBoxQuantityGoods.Size = new System.Drawing.Size(177, 21);
             this.textBoxQuantityGoods.TabIndex = 11;
+            // 
+            // groupBoxGoods
+            // 
+            this.groupBoxGoods.Controls.Add(this.listBoxGoods);
+            this.groupBoxGoods.Controls.Add(this.textBoxQuantityGoods);
+            this.groupBoxGoods.Controls.Add(this.labelQuantityGoods);
+            this.groupBoxGoods.Location = new System.Drawing.Point(296, 13);
+            this.groupBoxGoods.Name = "groupBoxGoods";
+            this.groupBoxGoods.Size = new System.Drawing.Size(267, 172);
+            this.groupBoxGoods.TabIndex = 12;
+            this.groupBoxGoods.TabStop = false;
+            this.groupBoxGoods.Text = "Товары";
+            // 
+            // groupBoxSeller
+            // 
+            this.groupBoxSeller.Controls.Add(this.comboBoxSellers);
+            this.groupBoxSeller.Location = new System.Drawing.Point(14, 13);
+            this.groupBoxSeller.Name = "groupBoxSeller";
+            this.groupBoxSeller.Size = new System.Drawing.Size(267, 65);
+            this.groupBoxSeller.TabIndex = 13;
+            this.groupBoxSeller.TabStop = false;
+            this.groupBoxSeller.Text = "Продавец";
+            // 
+            // groupBoxReceipts
+            // 
+            this.groupBoxReceipts.Controls.Add(this.dataGridViewReceipts);
+            this.groupBoxReceipts.Location = new System.Drawing.Point(14, 288);
+            this.groupBoxReceipts.Name = "groupBoxReceipts";
+            this.groupBoxReceipts.Size = new System.Drawing.Size(549, 287);
+            this.groupBoxReceipts.TabIndex = 14;
+            this.groupBoxReceipts.TabStop = false;
+            this.groupBoxReceipts.Text = "Квитанции";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 587);
-            this.Controls.Add(this.textBoxQuantityGoods);
-            this.Controls.Add(this.labelQuantityGoods);
+            this.ClientSize = new System.Drawing.Size(578, 587);
+            this.Controls.Add(this.groupBoxReceipts);
+            this.Controls.Add(this.groupBoxSeller);
+            this.Controls.Add(this.groupBoxGoods);
             this.Controls.Add(this.groupBoxCustomer);
-            this.Controls.Add(this.labelReceipts);
-            this.Controls.Add(this.labelGoods);
-            this.Controls.Add(this.labelCustomer);
-            this.Controls.Add(this.labelSeller);
-            this.Controls.Add(this.dataGridViewReceipts);
             this.Controls.Add(this.buttonCreateReceipt);
-            this.Controls.Add(this.listBoxGoods);
-            this.Controls.Add(this.comboBoxSellers);
             this.Name = "MainForm";
             this.Text = "Магазин холодильников";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReceipts)).EndInit();
             this.groupBoxCustomer.ResumeLayout(false);
             this.groupBoxCustomer.PerformLayout();
+            this.groupBoxGoods.ResumeLayout(false);
+            this.groupBoxGoods.PerformLayout();
+            this.groupBoxSeller.ResumeLayout(false);
+            this.groupBoxReceipts.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -210,15 +205,14 @@
         private System.Windows.Forms.ListBox listBoxGoods;
         private System.Windows.Forms.Button buttonCreateReceipt;
         private System.Windows.Forms.DataGridView dataGridViewReceipts;
-        private System.Windows.Forms.Label labelSeller;
-        private System.Windows.Forms.Label labelCustomer;
-        private System.Windows.Forms.Label labelGoods;
-        private System.Windows.Forms.Label labelReceipts;
         private System.Windows.Forms.Label labelPurchasedGoods;
         private System.Windows.Forms.GroupBox groupBoxCustomer;
         private System.Windows.Forms.TextBox textBoxPurchasedGoods;
         private System.Windows.Forms.Label labelQuantityGoods;
         private System.Windows.Forms.TextBox textBoxQuantityGoods;
+        private System.Windows.Forms.GroupBox groupBoxGoods;
+        private System.Windows.Forms.GroupBox groupBoxSeller;
+        private System.Windows.Forms.GroupBox groupBoxReceipts;
     }
 }
 
