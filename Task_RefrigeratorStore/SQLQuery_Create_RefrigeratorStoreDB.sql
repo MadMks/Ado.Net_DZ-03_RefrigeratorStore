@@ -11,7 +11,7 @@ CREATE TABLE goods
 (
 	"Goods_ID" INT NOT NULL PRIMARY KEY IDENTITY,
 	"Name" NVARCHAR(20) NOT NULL,
-	"Quantity" SMALLINT NOT NULL DEFAULT 0
+	"Quantity" SMALLINT NOT NULL DEFAULT 0 CHECK (Quantity >= 0)
 );
 GO
 
@@ -75,3 +75,6 @@ INSERT INTO customers
 	('Орехов', 'Григорий', 'Филиппович'),
 	('Виноградов', 'Николай', 'Романович')
 GO
+
+ALTER TABLE dbo.goods
+ADD CHECK(Quantity >= 0);

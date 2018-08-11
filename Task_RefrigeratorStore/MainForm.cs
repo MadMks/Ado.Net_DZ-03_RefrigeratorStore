@@ -133,11 +133,7 @@ namespace Task_RefrigeratorStore
 
                 // Снятие с остатков на складе.
                 command.CommandText = this.GetStringOfWriteOffFromStorage();
-                if (command.ExecuteNonQuery() == 0)
-                {
-                    transaction.Rollback();
-                    //MessageBox.Show("Недостаточно товаров на складе!");
-                }
+                command.ExecuteNonQuery();
 
                 // Добавление кол-ва к купленным товарам покупателя.
                 command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
@@ -149,14 +145,32 @@ namespace Task_RefrigeratorStore
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-
+                if (this.GetQuantitySelectedGoods() == 0)
+                {
+                    MessageBox.Show("Недостаточно товаров на складе!");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
                 transaction.Rollback();
             }
             finally
             {
                 this.connection?.Close();
             }
+        }
+
+        private int GetQuantitySelectedGoods()
+        {
+            string filterString =
+                "Goods_ID = "
+                + this.listBoxGoods.SelectedValue.ToString();
+
+            DataRow dataRow = this.dataSet.Tables["goods"].Select(filterString)[0];
+
+            return Convert.ToInt32(dataRow[2]);
         }
 
         /// <summary>
@@ -190,8 +204,8 @@ namespace Task_RefrigeratorStore
         private string GetStringOfWriteOffFromStorage()
         {
             string insertString = @"UPDATE goods SET Quantity = Quantity - 1
-                WHERE Goods_ID = " + this.listBoxGoods.SelectedValue.ToString()
-                + " AND Quantity > 0";
+                WHERE Goods_ID = " + this.listBoxGoods.SelectedValue.ToString();
+                //+ " AND Quantity > 0";
 
             return insertString;
         }
