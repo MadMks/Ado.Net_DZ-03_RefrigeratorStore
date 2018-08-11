@@ -197,9 +197,52 @@ namespace Task_RefrigeratorStore
             string insertQuery = @"INSERT INTO sales_receipts
                 ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])
                 VALUES
-                ('" + DateTime.Today + "', 'cust', 'sell', 'prod');";
+                ('" + DateTime.Today + "', '"
+                + this.GetFullNameSelectedCustomer() + "', '"
+                + this.GetFullNameSelectedSeller() + "', '"
+                + this.GetNameSelectedProduct() + "');";
 
             return insertQuery;
+        }
+
+        private string GetNameSelectedProduct()
+        {
+            string filterString
+                = "Goods_ID = '"
+                + this.listBoxGoods.SelectedValue
+                + "'";
+
+            DataRow dataRow = this.dataSet.Tables["goods"].Select(filterString)[0];
+
+            return dataRow[1].ToString();
+        }
+
+        private string GetFullNameSelectedSeller()
+        {
+            string filterString
+                = "Seller_ID = '"
+                + this.comboBoxSellers.SelectedValue
+                + "'";
+
+            DataRow dataRow = this.dataSet.Tables["sellers"].Select(filterString)[0];
+
+            return dataRow[1].ToString() + " "
+                + dataRow[2].ToString() + " "
+                + dataRow[3].ToString();
+        }
+
+        private string GetFullNameSelectedCustomer()
+        {
+            string filterString
+                = "Customer_ID = '"
+                + this.comboBoxCustomers.SelectedValue
+                + "'";
+
+            DataRow dataRow = this.dataSet.Tables["customers"].Select(filterString)[0];
+
+            return dataRow[1].ToString() + " "
+                + dataRow[2].ToString() + " "
+                + dataRow[3].ToString();
         }
 
         private void comboBoxCustomers_SelectedIndexChanged(object sender, EventArgs e)
