@@ -127,12 +127,20 @@ namespace Task_RefrigeratorStore
                 command = this.connection.CreateCommand();
                 command.Transaction = transaction;
 
+                // Вставка данных в таблицу квитанций.
                 command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
                 command.ExecuteNonQuery();
 
-                // TODO 2
+                // Снятие с остатков на складе.
+                command.CommandText = this.GetStringOfWriteOffFromStorage();
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    transaction.Rollback();
+                    //MessageBox.Show("Недостаточно товаров на складе!");
+                }
 
-                // TODO 3
+                // Добавление кол-ва к купленным товарам покупателя.
+                command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
 
                 transaction.Commit();
 
@@ -152,6 +160,43 @@ namespace Task_RefrigeratorStore
         }
 
         /// <summary>
+        /// Получить строку запроса добавления кол-ва купленного товара покупателю.
+        /// (в данной версии программы можно купить товар в кол-ве 1 шт).
+        /// </summary>
+        /// <returns>строка запроса добавления покупателя кол-ва купленных товаров.</returns>
+        private string GetStringOfAdditionToPurchasedGoodsOfBuyer()
+        {
+            //string filterString =
+            //    "Goods_ID = "
+            //    + this.listBoxGoods.SelectedValue.ToString();
+
+            //DataRow dataRow = this.dataSet.Tables["goods"].Select(filterString)[0];
+
+            //if (Convert.ToInt32(dataRow[2]) > 0)
+            //{
+                string insertString = @"UPDATE customers SET PurchasedGoods = PurchasedGoods + 1
+                    WHERE Customer_ID = " + this.comboBoxCustomers.SelectedValue.ToString();
+
+                return insertString;
+            //}
+
+            //return null;
+        }
+
+        /// <summary>
+        /// Получить строку запроса снятия кол-ва товаров с склада.
+        /// </summary>
+        /// <returns>Строка запроса списания выбранного товара с склада.</returns>
+        private string GetStringOfWriteOffFromStorage()
+        {
+            string insertString = @"UPDATE goods SET Quantity = Quantity - 1
+                WHERE Goods_ID = " + this.listBoxGoods.SelectedValue.ToString()
+                + " AND Quantity > 0";
+
+            return insertString;
+        }
+
+        /// <summary>
         /// Обновляем данные в программе.
         /// </summary>
         private void UpdatingTheDataInTheProgram()
@@ -165,6 +210,17 @@ namespace Task_RefrigeratorStore
             this.dataAdapter.Fill(this.dataSet);
 
             this.RestoreSelectedPurchaseSettings();
+
+            this.UpdateTextBoxQuantityData();
+        }
+
+        /// <summary>
+        /// Обновленние измененных данных в текстБоксах кол-ва товаров.
+        /// </summary>
+        private void UpdateTextBoxQuantityData()
+        {
+            this.UpdateTextBoxPurchasedGoods();
+            this.UpdateTextBoxQuantityGoods();
         }
 
         /// <summary>
@@ -247,6 +303,14 @@ namespace Task_RefrigeratorStore
 
         private void comboBoxCustomers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.UpdateTextBoxPurchasedGoods();
+        }
+
+        /// <summary>
+        /// Обновить TextBox кол-во приобретенных товаров. 
+        /// </summary>
+        private void UpdateTextBoxPurchasedGoods()
+        {
             string filterString
                 = "Customer_ID = '"
                 + this.comboBoxCustomers.SelectedValue
@@ -256,6 +320,14 @@ namespace Task_RefrigeratorStore
         }
 
         private void listBoxGoods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.UpdateTextBoxQuantityGoods();
+        }
+
+        /// <summary>
+        /// Обновить TextBox кол-во товаров.
+        /// </summary>
+        private void UpdateTextBoxQuantityGoods()
         {
             string filterString
                 = "Goods_ID = '"
