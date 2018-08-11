@@ -133,26 +133,33 @@ namespace Task_RefrigeratorStore
 
                 // Снятие с остатков на складе.
                 command.CommandText = this.GetStringOfWriteOffFromStorage();
-                command.ExecuteNonQuery();
+                if (this.GetQuantitySelectedGoods() == 0)
+                {
+                    throw new NoProductsException();
+                }
+                else
+                {
+                    command.ExecuteNonQuery();  // в таблице (дополнительно) добавлено ограничение (Quantity >= 0).
+                }
 
                 // Добавление кол-ва к купленным товарам покупателя.
                 command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
+                command.ExecuteNonQuery();
 
                 transaction.Commit();
 
                 this.UpdatingTheDataInTheProgram();
                 
             }
+            catch (NoProductsException ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                transaction.Rollback();
+            }
             catch (Exception ex)
             {
-                if (this.GetQuantitySelectedGoods() == 0)
-                {
-                    MessageBox.Show("Недостаточно товаров на складе!");
-                }
-                else
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                MessageBox.Show(ex.Message);
                 
                 transaction.Rollback();
             }
