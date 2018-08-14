@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Data.Common;
+using System.Globalization;
 
 namespace Task_RefrigeratorStore
 {
@@ -271,13 +272,13 @@ namespace Task_RefrigeratorStore
         /// <returns>Строка запроса вставки данных в таблицу.</returns>
         private string GetStringOfDataInsertionInTheCheckStorageTable()
         {
-            string insertQuery = @"INSERT INTO sales_receipts
-                ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])
-                VALUES
-                ('" + DateTime.Today + "', '"
-                + this.GetFullNameSelectedCustomer() + "', '"
-                + this.GetFullNameSelectedSeller() + "', '"
-                + this.GetNameSelectedProduct() + "');";
+            string insertQuery = @"INSERT INTO sales_receipts"
+                + " ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])"
+                + " VALUES"
+                + " ( '" + DateTime.Today.Date.ToString("yyyyMMdd"/*, new CultureInfo("en-US")*/) + "', '"
+                    + this.GetFullNameSelectedCustomer() + "', '"
+                    + this.GetFullNameSelectedSeller() + "', '"
+                    + this.GetNameSelectedProduct() + "');";
 
             return insertQuery;
         }
