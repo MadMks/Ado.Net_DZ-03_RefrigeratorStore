@@ -133,15 +133,7 @@ namespace Task_RefrigeratorStore
                 command.ExecuteNonQuery();
 
                 // Снятие с остатков на складе.
-                command.CommandText = this.GetStringOfWriteOffFromStorage();
-                if (this.GetQuantitySelectedGoods() == 0)
-                {
-                    throw new NoProductsException();
-                }
-                else
-                {
-                    command.ExecuteNonQuery();  // в таблице (дополнительно) добавлено ограничение (Quantity >= 0).
-                }
+                this.WriteOffOfGoodsFromStock(command);
 
                 // Добавление кол-ва к купленным товарам покупателя.
                 command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
@@ -150,7 +142,7 @@ namespace Task_RefrigeratorStore
                 transaction.Commit();
 
                 this.UpdatingTheDataInTheProgram();
-                
+
             }
             catch (NoProductsException ex)
             {
@@ -167,6 +159,23 @@ namespace Task_RefrigeratorStore
             finally
             {
                 this.connection?.Close();
+            }
+        }
+
+        /// <summary>
+        /// Списание товаров со склада.
+        /// </summary>
+        /// <param name="command">Обьект SqlCommand</param>
+        private void WriteOffOfGoodsFromStock(SqlCommand command)
+        {
+            command.CommandText = this.GetStringOfWriteOffFromStorage();
+            if (this.GetQuantitySelectedGoods() == 0)
+            {
+                throw new NoProductsException();
+            }
+            else
+            {
+                command.ExecuteNonQuery();  // в таблице (дополнительно) добавлено ограничение (Quantity >= 0).
             }
         }
 
@@ -188,21 +197,10 @@ namespace Task_RefrigeratorStore
         /// <returns>строка запроса добавления покупателя кол-ва купленных товаров.</returns>
         private string GetStringOfAdditionToPurchasedGoodsOfBuyer()
         {
-            //string filterString =
-            //    "Goods_ID = "
-            //    + this.listBoxGoods.SelectedValue.ToString();
+            string insertString = @"UPDATE customers SET PurchasedGoods = PurchasedGoods + 1
+                WHERE Customer_ID = " + this.comboBoxCustomers.SelectedValue.ToString();
 
-            //DataRow dataRow = this.dataSet.Tables["goods"].Select(filterString)[0];
-
-            //if (Convert.ToInt32(dataRow[2]) > 0)
-            //{
-                string insertString = @"UPDATE customers SET PurchasedGoods = PurchasedGoods + 1
-                    WHERE Customer_ID = " + this.comboBoxCustomers.SelectedValue.ToString();
-
-                return insertString;
-            //}
-
-            //return null;
+            return insertString;
         }
 
         /// <summary>
@@ -275,7 +273,8 @@ namespace Task_RefrigeratorStore
             string insertQuery = @"INSERT INTO sales_receipts"
                 + " ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])"
                 + " VALUES"
-                + " ( '" + DateTime.Today.Date.ToString("yyyyMMdd"/*, new CultureInfo("en-US")*/) + "', '"
+                + " ( '" + DateTime.Today.Date.ToString("yyyyMM" +
+                "dd"/*, new CultureInfo("en-US")*/) + "', '"
                     + this.GetFullNameSelectedCustomer() + "', '"
                     + this.GetFullNameSelectedSeller() + "', '"
                     + this.GetNameSelectedProduct() + "');";
