@@ -128,16 +128,13 @@ namespace Task_RefrigeratorStore
                 command = this.connection.CreateCommand();
                 command.Transaction = transaction;
 
-                // Вставка данных в таблицу квитанций.
-                command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
-                command.ExecuteNonQuery();
 
-                // Снятие с остатков на складе.
+                this.InsertingDataIntoATableOfReceipts(command);
+
                 this.WriteOffOfGoodsFromStock(command);
 
-                // Добавление кол-ва к купленным товарам покупателя.
-                command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
-                command.ExecuteNonQuery();
+                this.AddingQuantityToPurchasedGoodsOfBuyer(command);
+
 
                 transaction.Commit();
 
@@ -160,6 +157,26 @@ namespace Task_RefrigeratorStore
             {
                 this.connection?.Close();
             }
+        }
+
+        /// <summary>
+        /// Вставка данных в таблицу квитанций.
+        /// </summary>
+        /// <param name="command">Обьект SqlCommand</param>
+        private void InsertingDataIntoATableOfReceipts(SqlCommand command)
+        {
+            command.CommandText = this.GetStringOfDataInsertionInTheCheckStorageTable();
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Добавление кол-ва к купленным товарам покупателя.
+        /// </summary>
+        /// <param name="command">Обьект SqlCommand</param>
+        private void AddingQuantityToPurchasedGoodsOfBuyer(SqlCommand command)
+        {
+            command.CommandText = this.GetStringOfAdditionToPurchasedGoodsOfBuyer();
+            command.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -211,7 +228,6 @@ namespace Task_RefrigeratorStore
         {
             string insertString = @"UPDATE goods SET Quantity = Quantity - 1
                 WHERE Goods_ID = " + this.listBoxGoods.SelectedValue.ToString();
-                //+ " AND Quantity > 0";
 
             return insertString;
         }
@@ -273,8 +289,7 @@ namespace Task_RefrigeratorStore
             string insertQuery = @"INSERT INTO sales_receipts"
                 + " ([DateOfsale], [FullNameCustomer], [FullNameSeller], [ProductName])"
                 + " VALUES"
-                + " ( '" + DateTime.Today.Date.ToString("yyyyMM" +
-                "dd"/*, new CultureInfo("en-US")*/) + "', '"
+                + " ( '" + DateTime.Today.Date.ToString("yyyyMMdd") + "', '"
                     + this.GetFullNameSelectedCustomer() + "', '"
                     + this.GetFullNameSelectedSeller() + "', '"
                     + this.GetNameSelectedProduct() + "');";
