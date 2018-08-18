@@ -184,6 +184,8 @@
             this.Controls.Add(this.groupBoxGoods);
             this.Controls.Add(this.groupBoxCustomer);
             this.Controls.Add(this.buttonCreateReceipt);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Магазин холодильников";
             this.Load += new System.EventHandler(this.MainForm_Load);
