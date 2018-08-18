@@ -75,6 +75,3 @@ INSERT INTO customers
 	('Орехов', 'Григорий', 'Филиппович'),
 	('Виноградов', 'Николай', 'Романович')
 GO
-
-ALTER TABLE dbo.goods
-ADD CHECK(Quantity >= 0);
